@@ -9,6 +9,7 @@ import alagaLogo from "@/assets/alaga-ayomi-logo.png";
 import signature from "@/assets/signature.png";
 import { toWords } from "number-to-words";
 import { format } from "date-fns";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ReceiptData {
   receiptNo: number;
@@ -24,6 +25,8 @@ interface ReceiptData {
 }
 
 export const ReceiptForm = () => {
+  const isMobile = useIsMobile();
+
   const formatNumberWithCommas = (value: string) => {
     const numericValue = value.replace(/[^0-9.]/g, "");
     if (!numericValue) return "";
@@ -128,7 +131,7 @@ export const ReceiptForm = () => {
         </div>
 
         {/* Receipt */}
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-12 print:shadow-none print:rounded-none print:p-12">
+        <div className={`bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-12 print:shadow-none print:rounded-none print:p-12 print:break-inside-avoid ${isMobile ? 'print:orientation-landscape' : ''}`}>
           {/* Header with Logo and Title */}
         <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-0 md:gap-0 mb-4 pb-2 border-b-2 border-secondary print:mb-4 print:pb-2 print:flex-row">
   <div className="flex items-center -mt-12 md:mt-0 md:-ml-16 md:-mt-28 print:-ml-16 print:-mt-28">
