@@ -1,15 +1,16 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Printer, Download } from "lucide-react";
+import { Printer, Eye } from "lucide-react";
 import alagaLogo from "@/assets/alaga-ayomi-logo.png";
 import signature from "@/assets/signature.png";
 import { toWords } from "number-to-words";
 import { format } from "date-fns";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useNavigate } from "react-router-dom";
 
 interface ReceiptData {
   receiptNo: number;
@@ -26,6 +27,26 @@ interface ReceiptData {
 
 export const ReceiptForm = () => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
+
+  // Add print styles for mobile landscape
+  React.useEffect(() => {
+    if (isMobile) {
+      const style = document.createElement('style');
+      style.textContent = `
+        @media print {
+          @page {
+            size: landscape;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+      return () => {
+        document.head.removeChild(style);
+      };
+    }
+  }, [isMobile]);
+  const receiptRef = useRef<HTMLDivElement>(null);
 
   const formatNumberWithCommas = (value: string) => {
     const numericValue = value.replace(/[^0-9.]/g, "");
@@ -93,6 +114,10 @@ export const ReceiptForm = () => {
     window.print();
   };
 
+  const handleViewReceipt = () => {
+    navigate("/receipt-view", { state: formData });
+  };
+
   const handleGenerateNew = () => {
     const newReceiptNo = receiptNo + 1;
     setReceiptNo(newReceiptNo);
@@ -132,8 +157,12 @@ export const ReceiptForm = () => {
                 <Printer className="w-4 h-4 mr-2" />
                 Print
               </Button>
+              <Button onClick={handleViewReceipt} variant="outline" size="sm">
+                <Eye className="w-4 h-4 mr-2" />
+                View Receipt
+              </Button>
               <Button onClick={handleGenerateNew} size="sm">
-                <Download className="w-4 h-4 mr-2" />
+                <Printer className="w-4 h-4 mr-2" />
                 New Receipt
               </Button>
             </div>
@@ -141,14 +170,14 @@ export const ReceiptForm = () => {
         </div>
 
         {/* Receipt */}
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-12 print:shadow-none print:rounded-none print:p-12 print:break-inside-avoid">
+        <div ref={receiptRef} className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-4 print:shadow-none print:rounded-none print:p-12 print:break-inside-avoid">
           {/* Header with Logo and Title */}
-        <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-0 md:gap-0 mb-4 pb-2 border-b-2 border-secondary print:mb-4 print:pb-2 print:flex-row">
-  <div className="flex items-center -mt-12 md:mt-0 md:-ml-16 md:-mt-28 print:-ml-16 print:-mt-28">
+        <div className="flex flex-row items-center justify-between mb-4 pb-2 border-b-2 border-secondary print:mb-4 print:pb-2">
+  <div className="flex items-center">
     <img
       src={alagaLogo}
       alt="Alaga Ayomi Logo"
-      className="object-contain w-48 h-48 sm:w-56 sm:h-56 md:w-72 md:h-72 print:w-72 print:h-72"
+      className="object-contain w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 print:w-56 print:h-56"
     />
   </div>
 
@@ -207,13 +236,13 @@ export const ReceiptForm = () => {
             </div>
 
             {/* Amount in Words */}
-            <div className="flex items-start gap-2 md:gap-4 print:gap-4">
-              <Label className="text-xs md:text-base font-semibold min-w-[100px] md:min-w-[160px] print:text-base print:min-w-[160px] pt-2">Amount in Words:</Label>
+            <div className="flex items-center gap-2 md:gap-4 print:gap-4">
+              <Label className="text-xs md:text-base font-semibold min-w-[100px] md:min-w-[160px] print:text-base print:min-w-[160px]">Amount in Words:</Label>
               <div className="flex-1 border-b-2 border-secondary">
-                <Textarea
+                <Input
                   value={formData.amountWords}
                   onChange={(e) => setFormData({ ...formData, amountWords: e.target.value })}
-                  className="border-0 focus-visible:ring-0 px-2 py-1 min-h-[60px] resize-none print:bg-transparent text-xs md:text-sm"
+                  className="border-0 focus-visible:ring-0 px-2 py-1 h-auto print:bg-transparent text-xs md:text-sm"
                   placeholder="Enter amount in words"
                 />
               </div>
@@ -222,13 +251,13 @@ export const ReceiptForm = () => {
 
 
             {/* Being Payment For */}
-            <div className="flex items-start gap-2 md:gap-4 print:gap-4">
-              <Label className="text-xs md:text-base font-semibold min-w-[100px] md:min-w-[160px] print:text-base print:min-w-[160px] pt-2">Being Payment For:</Label>
+            <div className="flex items-center gap-2 md:gap-4 print:gap-4">
+              <Label className="text-xs md:text-base font-semibold min-w-[100px] md:min-w-[160px] print:text-base print:min-w-[160px]">Being Payment For:</Label>
               <div className="flex-1 border-b-2 border-muted">
-                <Textarea
+                <Input
                   value={formData.paymentFor}
                   onChange={(e) => setFormData({ ...formData, paymentFor: e.target.value })}
-                  className="border-0 focus-visible:ring-0 px-2 py-1 min-h-[60px] resize-none print:bg-transparent text-xs md:text-sm"
+                  className="border-0 focus-visible:ring-0 px-2 py-1 h-auto print:bg-transparent text-xs md:text-sm"
                   placeholder="Enter payment description"
                 />
               </div>
