@@ -111,7 +111,17 @@ export const ReceiptForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-muted p-4 md:p-8 print:bg-transparent print:p-0 print:min-h-0">
+    <>
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @media print and (max-width: 768px) {
+            @page {
+              size: landscape;
+            }
+          }
+        `
+      }} />
+      <div className="min-h-screen bg-muted p-4 md:p-8 print:bg-transparent print:p-0 print:min-h-0">
       <div className="max-w-6xl mx-auto print:max-w-full">
         {/* Control Panel - Hidden when printing */}
         <div className="mb-6 print:hidden">
@@ -131,7 +141,7 @@ export const ReceiptForm = () => {
         </div>
 
         {/* Receipt */}
-        <div className={`bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-12 print:shadow-none print:rounded-none print:p-12 print:break-inside-avoid ${isMobile ? 'print:orientation-landscape' : ''}`}>
+        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-12 print:shadow-none print:rounded-none print:p-12 print:break-inside-avoid">
           {/* Header with Logo and Title */}
         <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-0 md:gap-0 mb-4 pb-2 border-b-2 border-secondary print:mb-4 print:pb-2 print:flex-row">
   <div className="flex items-center -mt-12 md:mt-0 md:-ml-16 md:-mt-28 print:-ml-16 print:-mt-28">
@@ -311,5 +321,6 @@ export const ReceiptForm = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
