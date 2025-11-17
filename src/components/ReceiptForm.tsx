@@ -282,7 +282,7 @@ export const ReceiptForm = () => {
                 <img
                   src={signature}
                   alt="Signature"
-                  className="w-40 h-20 object-contain print:w-40 print:h-20"
+                  className="w-32 h-16 object-contain print:w-32 print:h-16"
                 />
                 <div className="border-t-2 border-primary mt-1 pt-1">
                   <span className="text-xs md:text-sm font-semibold print:text-sm">Authorized Signature</span>
