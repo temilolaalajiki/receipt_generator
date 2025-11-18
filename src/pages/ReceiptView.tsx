@@ -271,7 +271,7 @@ const ReceiptView = () => {
             {/* Footer with Contact Info */}
             <div className="mt-4 md:mt-12 pt-4 md:pt-6 border-t-2 border-primary">
               <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3 text-[10px] md:text-[11px]">
-                <div className="flex items-center gap-1 text-center">
+                <div className="flex flex-col md:flex-row items-center gap-1 text-center">
                   <span className="font-semibold text-primary">Address:</span>
                   <span>12 Christ Avenue, Fimeama, Abuloma 500101, Rivers, Nigeria</span>
                 </div>

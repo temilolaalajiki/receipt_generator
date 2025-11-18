@@ -132,9 +132,9 @@ export const ReceiptForm = () => {
       <div className="max-w-6xl mx-auto">
         {/* Control Panel */}
         <div className="mb-6">
-          <div className="bg-card rounded-lg shadow-sm p-4 flex flex-wrap gap-4 items-center justify-between">
-            <h2 className="text-lg font-semibold">Receipt Generator</h2>
-            <div className="flex gap-2">
+          <div className="bg-card rounded-lg shadow-sm p-4 flex flex-col sm:flex-row gap-4 items-center sm:justify-between">
+            <h2 className="text-lg font-semibold text-center w-full">Alaga Ayomi Receipt Generator</h2>
+            <div className="flex gap-2 justify-center">
               <Button onClick={handleViewReceipt} variant="outline" size="sm" disabled={!isFormComplete()}>
                 <Eye className="w-4 h-4 mr-2" />
                 View Receipt
@@ -300,7 +300,7 @@ export const ReceiptForm = () => {
           {/* Footer with Contact Info */}
           <div className="mt-8 md:mt-12 pt-4 md:pt-6 border-t-2 border-primary">
             <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3 text-[10px] md:text-[11px]">
-              <div className="flex items-center gap-1 text-center">
+              <div className="flex flex-col md:flex-row items-center gap-1 text-center">
                 <span className="font-semibold text-primary">Address:</span>
                 <span>12 Christ Avenue, Fimeama, Abuloma 500101, Rivers, Nigeria</span>
               </div>
