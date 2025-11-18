@@ -67,6 +67,9 @@ const ReceiptView = () => {
 
       // Add class for PNG-specific styling
       receiptRef.current.classList.add('png-download');
+      if (scale === 3) {
+        receiptRef.current.classList.add('desktop-png');
+      }
 
       const canvas = await html2canvas(receiptRef.current, {
         scale: scale,
@@ -80,6 +83,7 @@ const ReceiptView = () => {
 
       // Remove class after capture
       receiptRef.current.classList.remove('png-download');
+      receiptRef.current.classList.remove('desktop-png');
 
       // Create download link for the image
       const link = document.createElement('a');
@@ -104,6 +108,18 @@ const ReceiptView = () => {
   height: auto !important;
   object-fit: contain !important;
   margin-left: -20px !important;
+}
+
+.desktop-png img.logo {
+  width: 220px !important;
+  height: auto !important;
+  object-fit: contain !important;
+  margin-left: -20px !important;
+}
+
+.png-download .bg-primary h2 {
+  text-align: center !important;
+  margin-bottom: 13px !important;
 }
 
           .png-download .px-2.py-1 {

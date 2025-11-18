@@ -94,6 +94,17 @@ export const ReceiptForm = () => {
 
 
 
+  const isFormComplete = () => {
+    return (
+      formData.receivedFrom.trim() !== "" &&
+      formData.amountFigures.trim() !== "" &&
+      formData.amountWords.trim() !== "" &&
+      formData.paymentFor.trim() !== "" &&
+      formData.amountCharged.trim() !== "" &&
+      formData.advancePayment.trim() !== ""
+    );
+  };
+
   const handleViewReceipt = () => {
     navigate("/receipt-view", { state: formData });
   };
@@ -124,7 +135,7 @@ export const ReceiptForm = () => {
           <div className="bg-card rounded-lg shadow-sm p-4 flex flex-wrap gap-4 items-center justify-between">
             <h2 className="text-lg font-semibold">Receipt Generator</h2>
             <div className="flex gap-2">
-              <Button onClick={handleViewReceipt} variant="outline" size="sm">
+              <Button onClick={handleViewReceipt} variant="outline" size="sm" disabled={!isFormComplete()}>
                 <Eye className="w-4 h-4 mr-2" />
                 View Receipt
               </Button>
