@@ -1,0 +1,2 @@
+- [ ] Modify handleDownload function to detect device width and set dynamic scale based on breakpoints
+- [ ] Update html2canvas config to use the dynamic scale instead of fixed 4

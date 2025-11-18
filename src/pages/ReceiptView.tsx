@@ -88,7 +88,7 @@ const ReceiptView = () => {
       link.click();
     } catch (error) {
       console.error('Error generating image:', error);
-      // Ensure class is removed on error
+      // Ensure classes are removed on error
       if (receiptRef.current) {
         receiptRef.current.classList.remove('png-download');
       }
@@ -99,16 +99,11 @@ const ReceiptView = () => {
     <>
       <style dangerouslySetInnerHTML={{
         __html: `
-          @media print {
-            @page {
-              size: landscape;
-            }
-          }
 .png-download img.logo {
-  height: 180px !important;
-  width: auto !important;
+  width: 180px !important;
+  height: auto !important;
   object-fit: contain !important;
-   margin-left: -20px !important;
+  margin-left: -20px !important;
 }
 
           .png-download .px-2.py-1 {
@@ -116,12 +111,17 @@ const ReceiptView = () => {
   padding-bottom: 10px !important;
   line-height: 2.35 !important;
 }
+
+.mobile-landscape {
+  transform: rotate(90deg) !important;
+  transform-origin: center !important;
+}
         `
       }} />
-      <div className="min-h-screen bg-muted p-4 md:p-8 print:bg-transparent print:p-0 print:min-h-0">
-        <div className="max-w-6xl mx-auto print:max-w-full">
-          {/* Control Panel - Hidden when printing */}
-          <div className="mb-6 print:hidden">
+      <div className="min-h-screen bg-muted p-4 md:p-8">
+        <div className="max-w-6xl mx-auto">
+          {/* Control Panel */}
+          <div className="mb-6">
             <div className="bg-card rounded-lg shadow-sm p-4 flex flex-wrap gap-4 items-center justify-between">
               <h2 className="text-lg font-semibold">Receipt Preview</h2>
               <div className="flex gap-2">
@@ -138,9 +138,9 @@ const ReceiptView = () => {
           </div>
 
           {/* Receipt */}
-          <div ref={receiptRef} className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-4 print:shadow-none print:rounded-none print:p-12 print:break-inside-avoid">
+          <div ref={receiptRef} className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-4">
             {/* Header with Logo and Title */}
-            <div className="flex flex-row items-center justify-between mb-4 pb-2 border-b-2 border-secondary print:mb-4 print:pb-2">
+            <div className="flex flex-row items-center justify-between mb-4 pb-2 border-b-2 border-secondary">
               <div className="flex items-center">
                 {/* <img
                   src={alagaLogo}
@@ -155,21 +155,21 @@ const ReceiptView = () => {
               </div>
 
               <div className="text-center md:text-right">
-                <div className="bg-primary px-4 py-2 md:px-8 md:py-3 rounded-lg print:px-8 print:py-3">
-                  <h2 className="text-base sm:text-lg md:text-2xl font-bold text-primary-foreground tracking-wide print:text-2xl whitespace-nowrap">
+                <div className="bg-primary px-4 py-2 md:px-8 md:py-3 rounded-lg">
+                  <h2 className="text-base sm:text-lg md:text-2xl font-bold text-primary-foreground tracking-wide whitespace-nowrap">
                     PAYMENT RECEIPT
                   </h2>
                 </div>
-                <div className="mt-0 print:mt-0 flex flex-col items-center md:items-end gap-1">
+                <div className="mt-0 flex flex-col items-center md:items-end gap-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs md:text-sm font-medium print:text-sm">Receipt No:</span>
-                    <span className="text-sm md:text-lg font-bold text-primary print:text-lg">
+                    <span className="text-xs md:text-sm font-medium">Receipt No:</span>
+                    <span className="text-sm md:text-lg font-bold text-primary">
                       {String(formData.receiptNo).padStart(3, "0")}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs md:text-sm font-medium print:text-sm">Date:</span>
-                    <span className="text-xs md:text-base font-semibold text-primary print:text-base">
+                    <span className="text-xs md:text-sm font-medium">Date:</span>
+                    <span className="text-xs md:text-base font-semibold text-primary">
                       {formData.date}
                     </span>
                   </div>
@@ -178,18 +178,18 @@ const ReceiptView = () => {
             </div>
 
             {/* Form Fields - Read Only */}
-            <div className="space-y-2 md:space-y-4 print:space-y-4">
+            <div className="space-y-2 md:space-y-4">
               {/* Received From */}
-              <div className="flex items-center gap-2 md:gap-4 print:gap-4">
-                <span className="text-xs md:text-base font-semibold min-w-[100px] md:min-w-[160px] print:text-base print:min-w-[160px]">Received From:</span>
+              <div className="flex items-center gap-2 md:gap-4">
+                <span className="text-xs md:text-base font-semibold min-w-[100px] md:min-w-[160px]">Received From:</span>
                 <div className="flex-1 border-b-2 border-primary">
                   <span className="px-2 py-1 text-xs md:text-sm leading-tight" style={{ marginTop: '-4px' }}>{formData.receivedFrom || "Not specified"}</span>
                 </div>
               </div>
 
               {/* Amount in Figures */}
-              <div className="flex items-center gap-2 md:gap-4 print:gap-4">
-                <span className="text-xs md:text-base font-semibold min-w-[100px] md:min-w-[160px] print:text-base print:min-w-[160px]">Amount in Figures:</span>
+              <div className="flex items-center gap-2 md:gap-4">
+                <span className="text-xs md:text-base font-semibold min-w-[100px] md:min-w-[160px]">Amount in Figures:</span>
                 <span className="text-sm md:text-lg font-bold text-muted-foreground">₦</span>
                 <div className="flex-1 border-b-2 border-muted">
                   <span className="px-2 py-1 text-xs md:text-sm leading-tight" style={{ marginTop: '-4px' }}>{formData.amountFigures || "0.00"}</span>
@@ -197,39 +197,39 @@ const ReceiptView = () => {
               </div>
 
               {/* Amount in Words */}
-              <div className="flex items-center gap-2 md:gap-4 print:gap-4">
-                <span className="text-xs md:text-base font-semibold min-w-[100px] md:min-w-[160px] print:text-base print:min-w-[160px]">Amount in Words:</span>
+              <div className="flex items-center gap-2 md:gap-4">
+                <span className="text-xs md:text-base font-semibold min-w-[100px] md:min-w-[160px]">Amount in Words:</span>
                 <div className="flex-1 border-b-2 border-secondary">
                   <span className="px-2 py-1 text-xs md:text-sm leading-tight" style={{ marginTop: '-4px' }}>{formData.amountWords || "Not specified"}</span>
                 </div>
               </div>
 
               {/* Being Payment For */}
-              <div className="flex items-center gap-2 md:gap-4 print:gap-4">
-                <span className="text-xs md:text-base font-semibold min-w-[100px] md:min-w-[160px] print:text-base print:min-w-[160px]">Being Payment For:</span>
+              <div className="flex items-center gap-2 md:gap-4">
+                <span className="text-xs md:text-base font-semibold min-w-[100px] md:min-w-[160px]">Being Payment For:</span>
                 <div className="flex-1 border-b-2 border-muted">
                   <span className="px-2 py-1 text-xs md:text-sm leading-tight" style={{ marginTop: '-4px' }}>{formData.paymentFor || "Not specified"}</span>
                 </div>
               </div>
 
               {/* Amount Charged, Advance Payment, and Balance */}
-              <div className="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4 print:flex-row print:gap-4">
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4">
                 <div className="flex items-center gap-2 w-full md:w-auto md:flex-1">
-                  <span className="text-xs md:text-base font-semibold min-w-[100px] md:min-w-[160px] print:text-base print:min-w-[160px]">Amount Charged:</span>
+                  <span className="text-xs md:text-base font-semibold min-w-[100px] md:min-w-[160px]">Amount Charged:</span>
                   <span className="text-sm md:text-lg font-bold text-muted-foreground">₦</span>
                   <div className="flex-1 border-b-2 border-muted">
                     <span className="px-2 py-1 text-xs md:text-sm">{formData.amountCharged || "0.00"}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 w-full md:w-auto md:flex-1">
-                  <span className="text-xs md:text-base font-semibold min-w-[100px] md:min-w-[120px] print:text-base print:min-w-[120px]">Advance Payment:</span>
+                  <span className="text-xs md:text-base font-semibold min-w-[100px] md:min-w-[120px]">Advance Payment:</span>
                   <span className="text-sm md:text-lg font-bold text-muted-foreground">₦</span>
                   <div className="flex-1 border-b-2 border-muted">
                     <span className="px-2 py-1 text-xs md:text-sm">{formData.advancePayment || "0.00"}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 w-full md:w-auto md:flex-1">
-                  <span className="text-xs md:text-base font-semibold min-w-[100px] md:min-w-[80px] print:text-base print:min-w-[80px]">Balance:</span>
+                  <span className="text-xs md:text-base font-semibold min-w-[100px] md:min-w-[80px]">Balance:</span>
                   <span className="text-sm md:text-lg font-bold text-muted-foreground">₦</span>
                   <div className="flex-1 border-b-2 border-muted">
                     <span className="px-2 py-1 text-xs md:text-sm">{formatNumberWithCommas(formData.balance) || "0"}</span>
@@ -238,23 +238,23 @@ const ReceiptView = () => {
               </div>
 
               {/* Signature */}
-              <div className="flex justify-end mt-8 print:mt-4">
+              <div className="flex justify-end mt-8">
                 <div className="text-center">
                   <img
                     src={signature}
                     alt="Signature"
-                    className="w-24 h-12 object-contain print:w-24 print:h-12"
+                    className="w-24 h-12 object-contain"
                   />
                   <div className="border-t-2 border-primary mt-1">
-                    <span className="text-xs md:text-sm font-semibold print:text-sm">Authorized Signature</span>
+                    <span className="text-xs md:text-sm font-semibold">Authorized Signature</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Footer with Contact Info */}
-            <div className="mt-4 md:mt-12 pt-4 md:pt-6 border-t-2 border-primary print:mt-12 print:pt-6">
-              <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3 text-[10px] md:text-[11px] print:flex-row print:text-[11px] print:gap-3">
+            <div className="mt-4 md:mt-12 pt-4 md:pt-6 border-t-2 border-primary">
+              <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3 text-[10px] md:text-[11px]">
                 <div className="flex items-center gap-1 text-center">
                   <span className="font-semibold text-primary">Address:</span>
                   <span>12 Christ Avenue, Fimeama, Abuloma 500101, Rivers, Nigeria</span>
@@ -268,7 +268,7 @@ const ReceiptView = () => {
                   <span>showbukolorf@gmail.com</span>
                 </div>
               </div>
-              <div className="mt-2 md:mt-3 flex flex-col sm:flex-row items-center gap-2 md:gap-4 text-xs justify-center print:flex-row print:mt-3 print:text-sm print:gap-4">
+              <div className="mt-2 md:mt-3 flex flex-col sm:flex-row items-center gap-2 md:gap-4 text-xs justify-center">
                 <div className="flex items-center gap-1">
                   <span>📷</span>
                   <span>@alaga_ayomi</span>
