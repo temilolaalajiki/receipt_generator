@@ -156,7 +156,7 @@ const ReceiptView = () => {
           {/* Receipt */}
           <div ref={receiptRef} className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-4">
             {/* Header with Logo and Title */}
-            <div className="flex flex-row items-center justify-between mb-4 pb-2 border-b-2 border-secondary">
+            <div className="flex flex-row items-center justify-between mb-2 pb-2 border-b-2 border-secondary">
               <div className="flex items-center">
                 {/* <img
                   src={alagaLogo}
@@ -177,12 +177,6 @@ const ReceiptView = () => {
                   </h2>
                 </div>
                 <div className="mt-0 flex flex-col items-center md:items-end gap-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs md:text-sm font-medium">Receipt No:</span>
-                    <span className="text-sm md:text-lg font-bold text-primary">
-                      {String(formData.receiptNo).padStart(3, "0")}
-                    </span>
-                  </div>
                   <div className="flex items-center gap-2">
                     <span className="text-xs md:text-sm font-medium">Date:</span>
                     <span className="text-xs md:text-base font-semibold text-primary">
@@ -293,6 +287,9 @@ const ReceiptView = () => {
                   <span>💬</span>
                   <span>+234 806 722 8843</span>
                 </div>
+              </div>
+              <div className="mt-1 text-center text-[9px] md:text-[10px] font-semibold text-primary">
+                Note: NO REFUNDS. Payment for services is non-refundable.
               </div>
             </div>
           </div>

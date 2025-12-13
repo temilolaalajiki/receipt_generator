@@ -38,9 +38,9 @@ export const ReceiptForm = () => {
     return parts.join(".");
   };
 
-  const [receiptNo, setReceiptNo] = useState(1);
+  const [receiptNo, setReceiptNo] = useState(2);
   const [formData, setFormData] = useState<ReceiptData>({
-    receiptNo: 1,
+    receiptNo: 2,
     date: format(new Date(), "dd/MM/yyyy"),
     receivedFrom: "",
     amountFigures: "",
@@ -165,12 +165,6 @@ export const ReceiptForm = () => {
                 </h2>
               </div>
               <div className="mt-0 flex flex-col items-center md:items-end gap-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs md:text-sm font-medium">Receipt No:</span>
-                  <span className="text-sm md:text-lg font-bold text-primary">
-                    {String(formData.receiptNo).padStart(3, "0")}
-                  </span>
-                </div>
                 <div className="flex items-center gap-2">
                   <span className="text-xs md:text-sm font-medium">Date:</span>
                   <span className="text-xs md:text-base font-semibold text-primary">
@@ -322,6 +316,9 @@ export const ReceiptForm = () => {
                 <span>💬</span>
                 <span>+234 806 722 8843</span>
               </div>
+            </div>
+            <div className="mt-1 text-center text-[9px] md:text-[10px] font-semibold text-primary">
+              Note: NO REFUNDS. Payment for services is non-refundable.
             </div>
           </div>
         </div>

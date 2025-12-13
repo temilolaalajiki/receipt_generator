@@ -1,2 +1,3 @@
 - [ ] Modify handleDownload function to detect device width and set dynamic scale based on breakpoints
 - [ ] Update html2canvas config to use the dynamic scale instead of fixed 4
+- [x] Remove Receipt No: 001 from display and start numbering from 002
